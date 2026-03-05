@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3 Input Example — Glass UI Pro+</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#0f1226;
+      --bg2:#101a3f;
+      --card:rgba(255,255,255,.08);
+      --brd:rgba(255,255,255,.18);
+      --text:#e9ecf1;
+      --muted:#b9c2d3;
+      --accent:#6ea8fe;
+      --danger:#ff6b6b;
+    }
+    *{
+      box-sizing:border-box;
+    }
+    body{
+      background: radial-gradient(circle at top left, #222b55 0, transparent 45%),
+      radial-gradient(circle at bottom right, #1c4d6b 0, transparent 50%),
+      linear-gradient(160deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      padding:16px;
+    }
+    .glass{
+      background:var(--card);
+      border:1px solid var(--brd);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      border-radius:24px;
+      padding:28px 28px 24px;
+      box-shadow:0 18px 45px rgba(0,0,0,.55);
+      width:100%;
+      max-width:780px;
+      position:relative;
+      overflow:hidden;
+    }z
+    .glass::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at 0 0,rgba(255,255,255,.12) 0,transparent 55%);
+      opacity:.18;
+      pointer-events:none;
+    }
+    .glass-inner{
+      position:relative;
+      z-index:1;
+    }
+    h3{
+      letter-spacing:.03em;
+    }
+    .subtitle{
+      font-size:.875rem;
+      color:var(--muted);
+    }
+    .form-control,
+    .form-select{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.18);
+      color:var(--text);
+      font-size:.9rem;
+    }
+    .form-control::placeholder{
+      color:#c6cbd8aa;
+    }
+    .form-control:focus,
+    .form-select:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 1px rgba(110,168,254,.5);
+      background:rgba(0,0,0,.16);
+      color:var(--text);
+    }
+    .btn-add{
+      background:linear-gradient(135deg,#6ea8fe,#3ddab6);
+      border:none;
+      color:#0b1020;
+      font-weight:700;
+      border-radius:999px;
+      padding:.6rem 1.2rem;
+      box-shadow:0 10px 24px rgba(0,0,0,.6);
+      text-transform:uppercase;
+      font-size:.8rem;
+      letter-spacing:.12em;
+    }
+    .btn-add:hover{
+      filter:brightness(1.06);
+      transform:translateY(-1px);
+    }
+    .btn-add:active{
+      transform:translateY(0);
+      box-shadow:0 5px 14px rgba(0,0,0,.6);
+    }
+    .top-meta{
+      font-size:.8rem;
+      color:var(--muted);
+    }
+    .counter-pill{
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.2);
+      padding:.12rem .65rem;
+      font-size:.75rem;
+    }
+    .status-count-badge{
+      font-size:.75rem;
+      padding:.2rem .6rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.2);
+      background:rgba(15,23,42,0.7);
+    }
+
+    /* List */
+    .list-wrapper{
+      max-height:280px;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .list-group-item{
+      background:rgba(2,6,23,.68);
+      border-color:rgba(255,255,255,.12);
+      color:var(--text);
+      font-size:.9rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.75rem;
+      transition:background .18s ease,transform .18s ease,box-shadow .18s ease;
+    }
+    .list-group-item:hover{
+      background:rgba(15,23,42,.95);
+      transform:translateY(-1px);
+      box-shadow:0 12px 24px rgba(0,0,0,.5);
+    }
+    .item-main{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .item-name{
+      font-weight:600;
+    }
+    .item-meta{
+      font-size:.8rem;
+      color:var(--muted);
+    }
+    .status-badge{
+      font-size:.7rem;
+      padding:.15rem .45rem;
+      border-radius:999px;
+    }
+    .status-student{
+      background:rgba(110,168,254,.14);
+      border:1px solid rgba(110,168,254,.7);
+      color:#c9ddff;
+    }
+    .status-employed{
+      background:rgba(61,218,182,.14);
+      border:1px solid rgba(61,218,182,.7);
+      color:#c8f5e8;
+    }
+    .status-unemployed{
+      background:rgba(255,107,107,.12);
+      border:1px solid rgba(255,107,107,.7);
+      color:#ffd6d6;
+    }
+    .btn-icon{
+      border-radius:999px;
+      padding:.25rem .55rem;
+      border:1px solid rgba(255,255,255,.25);
+      font-size:.8rem;
+    }
+    .btn-icon:hover{
+      background:rgba(255,255,255,.08);
+    }
+    .btn-icon + .btn-icon{
+      margin-left:.25rem;
+    }
+
+    .is-invalid{
+      border-color:var(--danger)!important;
+    }
+    .invalid-feedback{
+      font-size:.75rem;
+    }
+    .empty-state{
+      font-size:.85rem;
+      color:var(--muted);
+      text-align:center;
+      padding:1rem .5rem .4rem;
+    }
+
+    /* Toolbar */
+    .toolbar-pill{
+      background:rgba(15,23,42,.72);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      padding:.35rem .75rem;
+      font-size:.8rem;
+    }
+
+    @media (max-width:576px){
+      .glass{
+        padding:22px 18px 18px;
+        border-radius:18px;
+      }
+      .toolbar-pill{
+        border-radius:14px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="glass">
+  <div class="glass-inner">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+      <div>
+        <h3 class="mb-1 fw-bold">🧩 Users Mini Dashboard</h3>
+        <p class="subtitle mb-0">
+          Name + age + status — add, filter, sort 👇
+        </p>
+      </div>
+      <div class="top-meta text-end">
+        <div class="counter-pill mb-1">
+          Total՝ <span id="totalCount">0</span>
+        </div>
+        <div class="d-flex gap-1 justify-content-end flex-wrap">
+          <span class="status-count-badge">Student: <span id="countStudent">0</span></span>
+          <span class="status-count-badge">Employed: <span id="countEmployed">0</span></span>
+          <span class="status-count-badge">Unemployed: <span id="countUnemployed">0</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inputs row -->
+    <div class="row g-2 mb-3">
+      <div class="col-md-4">
+        <label for="name" class="form-label mb-1 small">Name</label>
+        <input type="text" id="name" class="form-control" placeholder="E.` Armen">
+        <div class="invalid-feedback">Write the name</div>
+      </div>
+      <div class="col-md-4">
+        <label for="age" class="form-label mb-1 small">Age</label>
+        <input type="number" id="age" class="form-control" placeholder="Ex.` 21" min="1">
+        <div class="invalid-feedback">
+          Write the real age (&gt; 0)</div>
+      </div>
+      <div class="col-md-4">
+        <label for="status" class="form-label mb-1 small">Status</label>
+        <select id="status" class="form-select">
+          <option value="student">Student</option>
+          <option value="employed">Employed</option>
+          <option value="unemployed">Unemployed</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn btn-add w-100 mb-3" id="save">Add a post</button>
+
+    <!-- Toolbar: search + filters + sort -->
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <div class="toolbar-pill flex-grow-1 d-flex align-items-center gap-2">
+        <span class="small text-uppercase" style="letter-spacing:.1em;">Search</span>
+        <input id="searchInput" type="text" class="form-control form-control-sm border-0 bg-transparent"
+               placeholder="Search by name (օր.` Levon)">
+      </div>
+
+      <div class="toolbar-pill d-flex align-items-center gap-2">
+        <span class="small text-uppercase" style="letter-spacing:.1em;">Filter</span>
+        <select id="statusFilter" class="form-select form-select-sm bg-transparent border-0">
+          <option value="ALL">All</option>
+          <option value="Student">Student</option>
+          <option value="Employed">Employed</option>
+          <option value="Unemployed">Unemployed</option>
+        </select>
+      </div>
+
+      <div class="toolbar-pill d-flex align-items-center gap-2">
+        <span class="small text-uppercase" style="letter-spacing:.1em;">Sort</span>
+        <select id="sortSelect" class="form-select form-select-sm bg-transparent border-0">
+          <option value="NONE">-</option>
+          <option value="NAME_ASC">Name A–Z</option>
+          <option value="NAME_DESC">Name Z–A</option>
+          <option value="AGE_ASC">Age ↑</option>
+          <option value="AGE_DESC">Age ↓</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- List -->
+    <div class="list-wrapper">
+      <ul class="list-group" id="userList">
+<!--        <li class="list-group-item" data-id="1765215012662"><div class="item-main"><span class="item-name">Sarah (42)</span>-->
+<!--          <span class="item-meta">Status՝ -->
+<!--            <span class="status-badge status-employed">Employed</span>-->
+<!--        </div>-->
+<!--          <div>-->
+<!--            <button class="btn btn-sm btn-outline-light btn-icon" -->
+<!--                    data-action="edit">✏️</button>-->
+<!--            <button class="btn btn-sm btn-outline-light btn-icon"-->
+<!--                    data-action="delete">❌</button>-->
+<!--          </div>-->
+<!--        </li>-->
+      </ul>
+      <div id="emptyState" class="empty-state">
+        There are no posts yet. Fill in the fields and click »Add record»։
+      </div>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
