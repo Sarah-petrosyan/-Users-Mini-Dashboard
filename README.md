@@ -4,7 +4,7 @@
 
 **A modern user management dashboard built with JavaScript and a glass-style UI.**
 
-[**➥ Live Demo**]
+[**➥ Live Demo**] "Sarah-petrosyan/-Users-Mini-Dashboard"
 
 </div>
 
